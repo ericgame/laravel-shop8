@@ -39,6 +39,8 @@ Route::get('/', 'PagesController@root')->name('root');
 */
 Auth::routes(['verify' => true]);
 
-//
-
+// auth中間件 代表需要登錄，verified中間件 代表需要經過郵箱驗證
+Route::group(['middleware' => ['auth', 'verified']], function() {
+    Route::get('user_addresses', 'UserAddressesController@index')->name('user_addresses.index');
+});
 
