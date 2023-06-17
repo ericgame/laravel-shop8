@@ -41,6 +41,12 @@ Auth::routes(['verify' => true]);
 
 // auth中間件 代表需要登錄，verified中間件 代表需要經過郵箱驗證
 Route::group(['middleware' => ['auth', 'verified']], function() {
+    // 收貨地址列表
     Route::get('user_addresses', 'UserAddressesController@index')->name('user_addresses.index');
+
+    // 新增收貨地址
+    Route::get('user_addresses/create', 'UserAddressesController@create')->name('user_addresses.create');
+    Route::post('user_addresses', 'UserAddressesController@store')->name('user_addresses.store');
 });
+
 
