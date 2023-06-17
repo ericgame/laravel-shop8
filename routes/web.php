@@ -47,6 +47,14 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     // 新增收貨地址
     Route::get('user_addresses/create', 'UserAddressesController@create')->name('user_addresses.create');
     Route::post('user_addresses', 'UserAddressesController@store')->name('user_addresses.store');
+
+    // 修改收貨地址
+    Route::get('user_addresses/{user_address}', 'UserAddressesController@edit')->name('user_addresses.edit');
+    Route::put('user_addresses/{user_address}', 'UserAddressesController@update')->name('user_addresses.update');
+
+
+
+
 });
 
 
