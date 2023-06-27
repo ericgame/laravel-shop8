@@ -45,6 +45,38 @@ class ProductsController extends AdminController
         return $grid;
     }
 
+    protected function form()
+    {
+        $form = new Form(new Product);
+
+        // 創建一個輸入框，第一個參數 title 是模型的字段名，第二個參數是該字段描述
+        $form->text('title', '商品名稱')->rules('required');
+
+        // 創建一個選擇圖片的框
+        $form->image('image', '封面圖片')->rules('required|image');
+
+        // 創建一個富文本編輯器
+        $form->quill('description', '商品描述')->rules('required');
+
+        // 創建一組單選框
+        $form->radio('on_sale', '上架')->options(['1' => '是', '0' => '否'])->default('0');
+
+        // 直接添加一對多的關聯模型
+        $form->hasMany('skus', 'SKU 列表', function (Form\NestedForm $form) {
+            $form->text('title', 'SKU 名稱')->rules('required');
+            $form->text('description', 'SKU 描述')->rules('required');
+            $form->text('price', '單價')->rules('required|numeric|min:0.01');
+            $form->text('stock', '剩餘庫存')->rules('required|integer|min:0');
+        });
+
+        // 定義事件回調，當模型即將保存時會觸發這個回調
+        $form->saving(function (Form $form) {
+            $form->model()->price = collect($form->input('skus'))->where(Form::REMOVE_FLAG_NAME, 0)->min('price') ?: 0;
+        });
+
+        return $form;
+    }
+
     /**
      * Make a grid builder.
      *
