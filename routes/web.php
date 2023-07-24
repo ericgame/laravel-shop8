@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 //首頁
@@ -62,6 +63,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     //收藏商品
     Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
 
+    //購物車
+    Route::post('cart', 'CartController@add')->name('cart.add');
 });
 
 Route::redirect('/', '/products')->name('root');
