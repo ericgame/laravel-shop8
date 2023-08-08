@@ -71,6 +71,10 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 
     //購物車列表:刪除
     Route::delete('cart/{sku}', 'CartController@remove')->name('cart.remove');
+
+    //訂單
+    Route::post('orders', 'OrdersController@store')->name('orders.store');
+
 });
 
 Route::redirect('/', '/products')->name('root');
