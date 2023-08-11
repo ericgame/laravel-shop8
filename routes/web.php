@@ -75,6 +75,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     //訂單
     Route::post('orders', 'OrdersController@store')->name('orders.store');
 
+    //訂單列表
+    Route::get('orders', 'OrdersController@index')->name('orders.index');
 });
 
 Route::redirect('/', '/products')->name('root');
