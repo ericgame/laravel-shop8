@@ -77,6 +77,10 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 
     //訂單列表
     Route::get('orders', 'OrdersController@index')->name('orders.index');
+
+    //訂單詳情頁
+    Route::get('orders/{order}', 'OrdersController@show')->name('orders.show');
+    
 });
 
 Route::redirect('/', '/products')->name('root');
